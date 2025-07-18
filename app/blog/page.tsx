@@ -27,41 +27,41 @@ export default async function BlogPage() {
           <div className="lg:col-span-3">
             <div className="grid md:grid-cols-2 gap-6">
               {posts.map((post) => (
-                <Card key={post.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-                  <div className="relative h-48">
-                    <Image src="/placeholder.svg?height=192&width=384" alt={post.title} fill className="object-cover" />
-                  </div>
-                  <CardContent className="p-6">
-                    <div className="flex items-center gap-2 mb-3">
-                      {post.labels?.slice(0, 2).map((label) => (
-                        <Badge key={label} variant="secondary" className="text-yellow-600">
-                          <Link href={`/blog/category/${encodeURIComponent(label)}`}>{label}</Link>
-                        </Badge>
-                      ))}
+                <Link key={post.id} href={`/blog/${post.id}`} className="block group">
+                  <Card className="overflow-hidden cursor-pointer bg-white">
+                    <div className="relative h-48">
+                      <Image src="/placeholder.svg?height=192&width=384" alt={post.title} fill className="object-cover transition-transform duration-200 group-hover:scale-105" />
                     </div>
-                    <h2 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2">
-                      <Link href={`/blog/${post.id}`} className="hover:text-yellow-600 transition-colors">
+                    <CardContent className="p-6">
+                      <div className="flex items-center gap-2 mb-3">
+                        {post.labels?.slice(0, 2).map((label) => (
+                          <Badge key={label} variant="secondary" className="text-yellow-600">
+                            <Link href={`/blog/category/${encodeURIComponent(label)}`}>{label}</Link>
+                          </Badge>
+                        ))}
+                      </div>
+                      <h2 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-yellow-600 transition-colors">
                         {post.title}
-                      </Link>
-                    </h2>
-                    <div className="flex items-center gap-4 text-sm text-gray-500 mb-4">
-                      <div className="flex items-center gap-1">
-                        <User className="w-4 h-4" />
-                        <span>{post.author?.displayName || "Admin"}</span>
+                      </h2>
+                      <div className="flex items-center gap-4 text-sm text-gray-500 mb-4">
+                        <div className="flex items-center gap-1">
+                          <User className="w-4 h-4" />
+                          <span>{post.author?.displayName || "Admin"}</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <Calendar className="w-4 h-4" />
+                          <span>{new Date(post.published).toLocaleDateString()}</span>
+                        </div>
                       </div>
-                      <div className="flex items-center gap-1">
-                        <Calendar className="w-4 h-4" />
-                        <span>{new Date(post.published).toLocaleDateString()}</span>
-                      </div>
-                    </div>
-                    <div
-                      className="text-gray-600 line-clamp-3"
-                      dangerouslySetInnerHTML={{
-                        __html: post.content?.substring(0, 150) + "..." || "",
-                      }}
-                    />
-                  </CardContent>
-                </Card>
+                      <div
+                        className="text-gray-600 line-clamp-3"
+                        dangerouslySetInnerHTML={{
+                          __html: post.content?.substring(0, 150) + "..." || "",
+                        }}
+                      />
+                    </CardContent>
+                  </Card>
+                </Link>
               ))}
             </div>
           </div>

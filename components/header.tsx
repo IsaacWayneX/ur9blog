@@ -126,7 +126,7 @@ export function Header({ labels }: HeaderProps) {
 
             {/* Mobile Menu Button */}
             <Button variant="ghost" size="sm" className="lg:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-              {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {isMenuOpen ? <X className="w-8 h-8" /> : <Menu className="w-8 h-8" />}
             </Button>
           </div>
         </div>
