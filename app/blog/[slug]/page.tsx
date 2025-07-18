@@ -63,7 +63,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           {/* Article Header */}
           <article className="bg-white rounded-lg shadow-sm overflow-hidden">
             <div className="relative h-64 md:h-96">
-              <Image src="/placeholder.svg?height=384&width=768" alt={post.title} fill className="object-cover" />
+              <Image src="https://images.unsplash.com/photo-1612441804231-77a36b284856?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bW91bnRhaW4lMjBsYW5kc2NhcGV8ZW58MHx8MHx8fDA%3D" alt={post.title} fill className="object-cover" />
             </div>
 
             <div className="p-8">

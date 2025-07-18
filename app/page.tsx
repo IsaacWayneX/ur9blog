@@ -37,7 +37,7 @@ export default async function HomePage() {
               <Card className="mb-8 overflow-hidden">
                 <div className="relative h-64 md:h-80">
                   <Image
-                    src="/placeholder.svg?height=320&width=640"
+                    src="https://images.unsplash.com/photo-1612441804231-77a36b284856?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bW91bnRhaW4lMjBsYW5kc2NhcGV8ZW58MHx8MHx8fDA%3D"
                     alt={featuredPost.title}
                     fill
                     className="object-cover"
@@ -81,7 +81,12 @@ export default async function HomePage() {
               {recentPosts.map((post) => (
                 <Card key={post.id} className="overflow-hidden hover:shadow-lg transition-shadow">
                   <div className="relative h-48">
-                    <Image src="/placeholder.svg?height=192&width=384" alt={post.title} fill className="object-cover" />
+                    <Image
+                      src="https://plus.unsplash.com/premium_photo-1666863909125-3a01f038e71f?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bW91bnRhaW4lMjBsYW5kc2NhcGV8ZW58MHx8MHx8fDA%3D"
+                      alt={post.title}
+                      fill
+                      className="object-cover"
+                    />
                   </div>
                   <CardContent className="p-4">
                     <div className="flex items-center gap-2 mb-2">
@@ -129,7 +134,7 @@ export default async function HomePage() {
                     </div>
                     <div className="w-12 h-12 relative flex-shrink-0">
                       <Image
-                        src="/placeholder.svg?height=48&width=48"
+                        src="https://images.unsplash.com/photo-1604223190546-a43e4c7f29d7?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bW91bnRhaW4lMjBsYW5kc2NhcGV8ZW58MHx8MHx8fDA%3D"
                         alt={post.title}
                         fill
                         className="object-cover rounded"

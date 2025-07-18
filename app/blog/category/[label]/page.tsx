@@ -58,7 +58,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             {posts.map((post) => (
               <Card key={post.id} className="overflow-hidden hover:shadow-lg transition-shadow">
                 <div className="relative h-48">
-                  <Image src="/placeholder.svg?height=192&width=384" alt={post.title} fill className="object-cover" />
+                  <Image src="https://plus.unsplash.com/premium_photo-1666863909125-3a01f038e71f?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bW91bnRhaW4lMjBsYW5kc2NhcGV8ZW58MHx8MHx8fDA%3D" alt={post.title} fill className="object-cover" />
                 </div>
                 <CardContent className="p-6">
                   <div className="flex items-center gap-2 mb-3">
