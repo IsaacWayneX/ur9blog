@@ -11,21 +11,21 @@ interface HeaderProps {
   labels: string[]
 }
 
-export function Header({ labels }: HeaderProps) {
+export function Header({ labels: categories }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
 
   // Group categories by type for better organization
   const categorizedLabels = {
-    "Travel & Places": labels.filter((label) =>
-      ["Travel", "Japan", "Mountains", "Nature", "Photography"].includes(label),
+    "Travel & Places": categories.filter((category) =>
+      ["Travel", "Japan", "Mountains", "Nature", "Photography"].includes(category),
     ),
-    "Technology & Science": labels.filter((label) => ["Technology", "Science", "Space", "Astronomy"].includes(label)),
-    "Lifestyle & Culture": labels.filter((label) =>
-      ["Lifestyle", "Architecture", "History", "Urban", "Poetry", "City Life"].includes(label),
+    "Technology & Science": categories.filter((category) => ["Technology", "Science", "Space", "Astronomy"].includes(category)),
+    "Lifestyle & Culture": categories.filter((category) =>
+      ["Lifestyle", "Architecture", "History", "Urban", "Poetry", "City Life"].includes(category),
     ),
-    Other: labels.filter(
-      (label) =>
+    Other: categories.filter(
+      (category) =>
         ![
           "Travel",
           "Japan",
@@ -42,12 +42,12 @@ export function Header({ labels }: HeaderProps) {
           "Urban",
           "Poetry",
           "City Life",
-        ].includes(label),
+        ].includes(category),
     ),
   }
 
   // Filter out empty categories
-  const filteredCategories = Object.entries(categorizedLabels).filter(([_, labels]) => labels.length > 0)
+  const filteredCategories = Object.entries(categorizedLabels).filter(([_, categories]) => categories.length > 0)
 
   return (
     <header className="bg-white shadow-sm border-b relative z-50">
@@ -90,19 +90,19 @@ export function Header({ labels }: HeaderProps) {
                 <Card className="shadow-xl border border-yellow-200 bg-white">
                   <CardContent className="p-8">
                     <div className="grid grid-cols-3 gap-8">
-                      {filteredCategories.map(([categoryName, categoryLabels]) => (
+                      {filteredCategories.map(([categoryName, categoryList]) => (
                         <div key={categoryName}>
                           <h4 className="font-semibold text-black mb-4 text-sm uppercase tracking-wide border-b border-gray-200 pb-2">
                             {categoryName}
                           </h4>
                           <div className="space-y-2">
-                            {categoryLabels.map((label) => (
+                            {categoryList.map((category) => (
                               <Link
-                                key={label}
-                                href={`/blog/category/${encodeURIComponent(label)}`}
+                                key={category}
+                                href={`/blog/category/${encodeURIComponent(category)}`}
                                 className="block text-sm text-gray-600 hover:text-yellow-600 transition-colors p-2 rounded hover:bg-yellow-50"
                               >
-                                {label}
+                                {category}
                               </Link>
                             ))}
                           </div>
@@ -151,11 +151,11 @@ export function Header({ labels }: HeaderProps) {
               </Link>
 
               {/* Mobile Categories Dropdown */}
-              {filteredCategories.map(([categoryName, categoryLabels]) => (
+              {filteredCategories.map(([categoryName, categoryList]) => (
                 <MobileCategoryDropdown
                   key={categoryName}
                   categoryName={categoryName}
-                  labels={categoryLabels}
+                  labels={categoryList}
                   onLinkClick={() => setIsMenuOpen(false)}
                 />
               ))}
@@ -177,7 +177,7 @@ export function Header({ labels }: HeaderProps) {
 
 function MobileCategoryDropdown({
   categoryName,
-  labels,
+  labels: categories,
   onLinkClick,
 }: {
   categoryName: string
@@ -198,14 +198,14 @@ function MobileCategoryDropdown({
 
       {isOpen && (
         <div className="ml-4 mt-2 space-y-1">
-          {labels.map((label) => (
+          {categories.map((category) => (
             <Link
-              key={label}
-              href={`/blog/category/${encodeURIComponent(label)}`}
+              key={category}
+              href={`/blog/category/${encodeURIComponent(category)}`}
               className="block text-sm text-gray-600 hover:text-yellow-600 transition-colors p-2 rounded hover:bg-yellow-50"
               onClick={onLinkClick}
             >
-              {label}
+              {category}
             </Link>
           ))}
         </div>

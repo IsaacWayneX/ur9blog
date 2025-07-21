@@ -13,13 +13,14 @@ interface CategoryPageProps {
 }
 
 export async function generateStaticParams() {
-  const labels = await getLabels()
-  return labels.map((label) => ({
-    label: encodeURIComponent(label),
+  const categories = await getLabels()
+  return categories.map((category) => ({
+    label: encodeURIComponent(category),
   }))
 }
 
-export async function generateMetadata({ params }: CategoryPageProps) {
+export async function generateMetadata(props: CategoryPageProps) {
+  const { params } = await props
   const decodedLabel = decodeURIComponent(params.label)
 
   return {
@@ -28,10 +29,11 @@ export async function generateMetadata({ params }: CategoryPageProps) {
   }
 }
 
-export default async function CategoryPage({ params }: CategoryPageProps) {
+export default async function CategoryPage(props: CategoryPageProps) {
+  const { params } = await props
   const decodedLabel = decodeURIComponent(params.label)
   const allPosts = await getBlogPosts()
-  const posts = allPosts.filter((post) => post.labels?.includes(decodedLabel))
+  const posts = allPosts.filter((post) => post.categories?.includes(decodedLabel))
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -58,18 +60,18 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             {posts.map((post) => (
               <Card key={post.id} className="overflow-hidden hover:shadow-lg transition-shadow">
                 <div className="relative h-48">
-                  <Image src="https://plus.unsplash.com/premium_photo-1666863909125-3a01f038e71f?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bW91bnRhaW4lMjBsYW5kc2NhcGV8ZW58MHx8MHx8fDA%3D" alt={post.title} fill className="object-cover" />
+                  <Image src={post.image || "https://plus.unsplash.com/premium_photo-1666863909125-3a01f038e71f?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bW91bnRhaW4lMjBsYW5kc2NhcGV8ZW58MHx8MHx8fDA%3D"} alt={post.title} fill className="object-cover" />
                 </div>
                 <CardContent className="p-6">
                   <div className="flex items-center gap-2 mb-3">
-                    {post.labels?.slice(0, 2).map((label) => (
-                      <Badge key={label} variant="secondary" className="text-yellow-600">
-                        <Link href={`/blog/category/${encodeURIComponent(label)}`}>{label}</Link>
+                    {post.categories?.slice(0, 2).map((category) => (
+                      <Badge key={category} variant="secondary" className="text-yellow-600">
+                        <Link href={`/blog/category/${encodeURIComponent(category)}`}>{category}</Link>
                       </Badge>
                     ))}
                   </div>
                   <h2 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2">
-                    <Link href={`/blog/${post.id}`} className="hover:text-yellow-600 transition-colors">
+                    <Link href={`/blog/${post.slug}`} className="hover:text-yellow-600 transition-colors">
                       {post.title}
                     </Link>
                   </h2>

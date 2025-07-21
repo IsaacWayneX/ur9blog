@@ -19,7 +19,8 @@ export async function generateStaticParams() {
   }))
 }
 
-export async function generateMetadata({ params }: BlogPostPageProps) {
+export async function generateMetadata(props: BlogPostPageProps) {
+  const { params } = await props
   const post = await getBlogPost(params.slug)
 
   if (!post) {
@@ -41,7 +42,8 @@ export async function generateMetadata({ params }: BlogPostPageProps) {
   }
 }
 
-export default async function BlogPostPage({ params }: BlogPostPageProps) {
+export default async function BlogPostPage(props: BlogPostPageProps) {
+  const { params } = await props
   const post = await getBlogPost(params.slug)
 
   if (!post) {
@@ -50,60 +52,69 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-8">
-        <div className="max-w-4xl mx-auto">
-          {/* Back Button */}
-          <Button variant="ghost" asChild className="mb-6">
+      {/* Hero Section */}
+      <div className="relative w-full h-80 md:h-[420px] lg:h-[500px] flex items-end">
+        <Image
+          src={post.image || "https://images.unsplash.com/photo-1612441804231-77a36b284856?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bW91bnRhaW4lMjBsYW5kc2NhcGV8ZW58MHx8MHx8fDA%3D"}
+          alt={post.title}
+          fill
+          className="object-cover object-center z-0"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent z-10" />
+        {/* Floating Back Button */}
+        <div className="absolute top-6 left-6 z-20">
+          <Button variant="secondary" size="icon" asChild className="rounded-full shadow-lg bg-white/80 hover:bg-white">
             <Link href="/blog">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Blog
+              <ArrowLeft className="w-5 h-5 text-gray-800" />
             </Link>
           </Button>
-
-          {/* Article Header */}
-          <article className="bg-white rounded-lg shadow-sm overflow-hidden">
-            <div className="relative h-64 md:h-96">
-              <Image src="https://images.unsplash.com/photo-1612441804231-77a36b284856?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bW91bnRhaW4lMjBsYW5kc2NhcGV8ZW58MHx8MHx8fDA%3D" alt={post.title} fill className="object-cover" />
+        </div>
+        {/* Hero Content */}
+        <div className="relative z-20 p-8 pb-10 w-full max-w-4xl mx-auto">
+          <div className="flex flex-wrap gap-2 mb-4">
+            {post.categories?.map((category) => (
+              <Badge key={category} variant="secondary" className="text-white bg-yellow-600/90 hover:bg-yellow-700/90 text-sm px-3 py-1 rounded-full shadow">
+                <Link href={`/blog/category/${encodeURIComponent(category)}`}>{category}</Link>
+              </Badge>
+            ))}
+          </div>
+          <h1 className="text-3xl md:text-5xl font-extrabold text-white drop-shadow mb-4 leading-tight">{post.title}</h1>
+          <div className="flex items-center gap-4 text-white/90 text-sm">
+            <div className="flex items-center gap-2">
+              <User className="w-4 h-4" />
+              <span>{post.author?.displayName || "Admin"}</span>
             </div>
-
-            <div className="p-8">
-              {/* Labels */}
-              <div className="flex items-center gap-2 mb-4">
-                {post.labels?.map((label) => (
-                  <Badge key={label} variant="secondary" className="text-yellow-600">
-                    <Link href={`/blog/category/${encodeURIComponent(label)}`}>{label}</Link>
-                  </Badge>
-                ))}
-              </div>
-
-              {/* Title */}
-              <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">{post.title}</h1>
-
-              {/* Meta Info */}
-              <div className="flex items-center gap-6 text-gray-500 mb-8 pb-8 border-b">
-                <div className="flex items-center gap-2">
-                  <User className="w-5 h-5" />
-                  <span>{post.author?.displayName || "Admin"}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Calendar className="w-5 h-5" />
-                  <span>
-                    {new Date(post.published).toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })}
-                  </span>
-                </div>
-              </div>
-
-              {/* Content */}
-              <div
-                className="prose prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-a:text-yellow-600 prose-strong:text-gray-900"
-                dangerouslySetInnerHTML={{ __html: post.content || "" }}
-              />
+            <span className="hidden md:inline">•</span>
+            <div className="flex items-center gap-2">
+              <Calendar className="w-4 h-4" />
+              <span>{new Date(post.published).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</span>
             </div>
-          </article>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content Card */}
+      <div className="w-full flex justify-center -mt-10 pb-16 relative z-30">
+        <div className="w-[80vw] max-w-5xl bg-white rounded-2xl shadow-md p-8 md:p-12 border border-gray-100">
+          <div
+            className="prose prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-a:text-yellow-600 prose-strong:text-gray-900 prose-img:rounded-xl prose-img:shadow-md"
+            dangerouslySetInnerHTML={{ __html: post.content || "" }}
+          />
+          {/* Author Box */}
+          <div className="flex items-center gap-4 mt-12 pt-8 border-t border-gray-100">
+            <Image
+              src={post.author?.image?.url || "/placeholder-user.jpg"}
+              alt={post.author?.displayName || "Author"}
+              width={48}
+              height={48}
+              className="rounded-full border border-gray-200 shadow-sm"
+            />
+            <div>
+              <div className="font-semibold text-gray-900">{post.author?.displayName || "Admin"}</div>
+              <div className="text-xs text-gray-500">Published {new Date(post.published).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

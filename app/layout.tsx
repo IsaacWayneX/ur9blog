@@ -19,12 +19,12 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const labels = await getLabels()
+  const categories = await getLabels()
 
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Header labels={labels} />
+        <Header labels={categories} />
         <main>{children}</main>
         <Footer />
       </body>

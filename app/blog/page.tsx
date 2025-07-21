@@ -12,7 +12,7 @@ export const metadata = {
 
 export default async function BlogPage() {
   const posts = await getBlogPosts()
-  const labels = await getLabels()
+  const categories = await getLabels()
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -27,16 +27,16 @@ export default async function BlogPage() {
           <div className="lg:col-span-3">
             <div className="grid md:grid-cols-2 gap-6">
               {posts.map((post) => (
-                <Link key={post.id} href={`/blog/${post.id}`} className="block group">
+                <Link key={post.id} href={`/blog/${post.slug}`} className="block group">
                   <Card className="overflow-hidden cursor-pointer bg-white">
                     <div className="relative h-48">
-                      <Image src="https://plus.unsplash.com/premium_photo-1666863909125-3a01f038e71f?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bW91bnRhaW4lMjBsYW5kc2NhcGV8ZW58MHx8MHx8fDA%3D" alt={post.title} fill className="object-cover transition-transform duration-200 group-hover:scale-105" />
+                      <Image src={post.image || "https://plus.unsplash.com/premium_photo-1666863909125-3a01f038e71f?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bW91bnRhaW4lMjBsYW5kc2NhcGV8ZW58MHx8MHx8fDA%3D"} alt={post.title} fill className="object-cover transition-transform duration-200 group-hover:scale-105" />
                     </div>
                     <CardContent className="p-6">
                       <div className="flex items-center gap-2 mb-3">
-                        {post.labels?.slice(0, 2).map((label) => (
-                          <Badge key={label} variant="secondary" className="text-yellow-600">
-                            <Link href={`/blog/category/${encodeURIComponent(label)}`}>{label}</Link>
+                        {post.categories?.slice(0, 2).map((category) => (
+                          <Badge key={category} variant="secondary" className="text-yellow-600">
+                            <Link href={`/blog/category/${encodeURIComponent(category)}`}>{category}</Link>
                           </Badge>
                         ))}
                       </div>
@@ -71,13 +71,13 @@ export default async function BlogPage() {
             <Card className="p-6">
               <h3 className="text-xl font-bold text-gray-900 mb-4">Categories</h3>
               <div className="space-y-2">
-                {labels.map((label) => (
+                {categories.map((category) => (
                   <Link
-                    key={label}
-                    href={`/blog/category/${encodeURIComponent(label)}`}
+                    key={category}
+                    href={`/blog/category/${encodeURIComponent(category)}`}
                     className="block p-2 rounded hover:bg-yellow-50 transition-colors"
                   >
-                    {label}
+                    {category}
                   </Link>
                 ))}
               </div>

@@ -7,7 +7,7 @@ import { Calendar, User } from "lucide-react"
 
 export default async function HomePage() {
   const posts = await getBlogPosts()
-  const labels = await getLabels()
+  const categories = await getLabels()
 
   const featuredPost = posts[0]
   const topStories = posts.slice(1, 4)
@@ -37,7 +37,7 @@ export default async function HomePage() {
               <Card className="mb-8 overflow-hidden">
                 <div className="relative h-64 md:h-80">
                   <Image
-                    src="https://images.unsplash.com/photo-1612441804231-77a36b284856?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bW91bnRhaW4lMjBsYW5kc2NhcGV8ZW58MHx8MHx8fDA%3D"
+                    src={featuredPost.image || "https://images.unsplash.com/photo-1612441804231-77a36b284856?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bW91bnRhaW4lMjBsYW5kc2NhcGV8ZW58MHx8MHx8fDA%3D"}
                     alt={featuredPost.title}
                     fill
                     className="object-cover"
@@ -45,14 +45,14 @@ export default async function HomePage() {
                 </div>
                 <CardContent className="p-6">
                   <div className="flex items-center gap-2 mb-3">
-                    {featuredPost.labels?.slice(0, 2).map((label) => (
-                      <Badge key={label} variant="secondary" className="text-yellow-600">
-                        <Link href={`/blog/category/${encodeURIComponent(label)}`}>{label}</Link>
+                    {featuredPost.categories?.slice(0, 2).map((category) => (
+                      <Badge key={category} variant="secondary" className="text-yellow-600">
+                        <Link href={`/blog/category/${encodeURIComponent(category)}`}>{category}</Link>
                       </Badge>
                     ))}
                   </div>
                   <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
-                    <Link href={`/blog/${featuredPost.id}`} className="hover:text-yellow-600 transition-colors">
+                    <Link href={`/blog/${featuredPost.slug}`} className="hover:text-yellow-600 transition-colors">
                       {featuredPost.title}
                     </Link>
                   </h2>
@@ -82,7 +82,7 @@ export default async function HomePage() {
                 <Card key={post.id} className="overflow-hidden hover:shadow-lg transition-shadow">
                   <div className="relative h-48">
                     <Image
-                      src="https://plus.unsplash.com/premium_photo-1666863909125-3a01f038e71f?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bW91bnRhaW4lMjBsYW5kc2NhcGV8ZW58MHx8MHx8fDA%3D"
+                      src={post.image || "https://plus.unsplash.com/premium_photo-1666863909125-3a01f038e71f?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bW91bnRhaW4lMjBsYW5kc2NhcGV8ZW58MHx8MHx8fDA%3D"}
                       alt={post.title}
                       fill
                       className="object-cover"
@@ -90,14 +90,14 @@ export default async function HomePage() {
                   </div>
                   <CardContent className="p-4">
                     <div className="flex items-center gap-2 mb-2">
-                      {post.labels?.slice(0, 1).map((label) => (
-                        <Badge key={label} variant="outline" className="text-xs">
-                          <Link href={`/blog/category/${encodeURIComponent(label)}`}>{label}</Link>
+                      {post.categories?.slice(0, 1).map((category) => (
+                        <Badge key={category} variant="outline" className="text-xs">
+                          <Link href={`/blog/category/${encodeURIComponent(category)}`}>{category}</Link>
                         </Badge>
                       ))}
                     </div>
                     <h3 className="font-bold text-gray-900 mb-2 line-clamp-2">
-                      <Link href={`/blog/${post.id}`} className="hover:text-yellow-600 transition-colors">
+                      <Link href={`/blog/${post.slug}`} className="hover:text-yellow-600 transition-colors">
                         {post.title}
                       </Link>
                     </h3>
@@ -122,7 +122,7 @@ export default async function HomePage() {
                     <span className="text-2xl font-bold text-yellow-600 flex-shrink-0">{index + 1}</span>
                     <div className="flex-1">
                       <h4 className="font-semibold text-gray-900 mb-1 line-clamp-2">
-                        <Link href={`/blog/${post.id}`} className="hover:text-yellow-600 transition-colors">
+                        <Link href={`/blog/${post.slug}`} className="hover:text-yellow-600 transition-colors">
                           {post.title}
                         </Link>
                       </h4>
@@ -134,7 +134,7 @@ export default async function HomePage() {
                     </div>
                     <div className="w-12 h-12 relative flex-shrink-0">
                       <Image
-                        src="https://images.unsplash.com/photo-1604223190546-a43e4c7f29d7?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bW91bnRhaW4lMjBsYW5kc2NhcGV8ZW58MHx8MHx8fDA%3D"
+                        src={post.image || "https://images.unsplash.com/photo-1604223190546-a43e4c7f29d7?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bW91bnRhaW4lMjBsYW5kc2NhcGV8ZW58MHx8MHx8fDA%3D"}
                         alt={post.title}
                         fill
                         className="object-cover rounded"
@@ -149,9 +149,9 @@ export default async function HomePage() {
             <Card className="p-6 mt-6">
               <h3 className="text-xl font-bold text-gray-900 mb-4">Categories</h3>
               <div className="flex flex-wrap gap-2">
-                {labels.map((label) => (
-                  <Badge key={label} variant="outline" className="hover:bg-yellow-100 transition-colors">
-                    <Link href={`/blog/category/${encodeURIComponent(label)}`}>{label}</Link>
+                {categories.map((category) => (
+                  <Badge key={category} variant="outline" className="hover:bg-yellow-100 transition-colors">
+                    <Link href={`/blog/category/${encodeURIComponent(category)}`}>{category}</Link>
                   </Badge>
                 ))}
               </div>
