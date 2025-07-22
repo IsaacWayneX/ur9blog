@@ -95,10 +95,10 @@ export default async function BlogPostPage(props: BlogPostPageProps) {
       </div>
 
       {/* Main Content Card */}
-      <div className="w-full flex justify-center -mt-10 pb-16 relative z-30">
-        <div className="w-[80vw] max-w-5xl bg-white rounded-2xl shadow-md p-8 md:p-12 border border-gray-100">
+      <div className="w-full flex justify-center mt-4 pb-16 relative z-30">
+        <div className="w-[90vw] max-w-5xl bg-white p-0 md:p-0">
           <div
-            className="prose prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-a:text-yellow-600 prose-strong:text-gray-900 prose-img:rounded-xl prose-img:shadow-md"
+            className="prose prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-a:text-yellow-600 prose-strong:text-gray-900"
             dangerouslySetInnerHTML={{ __html: post.content || "" }}
           />
           {/* Author Box */}

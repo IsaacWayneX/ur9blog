@@ -18,13 +18,13 @@ export default async function HomePage() {
       {/* Hero Section */}
       <section className="bg-white py-16">
         <div className="container mx-auto px-4 text-center">
-          <p className="bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 bg-clip-text text-transparent font-medium mb-4">
+          {/* <p className="bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 bg-clip-text text-transparent font-medium mb-4">
             Our Blog
-          </p>
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Stories & Ideas</h1>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+          </p> */}
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Stories & News</h1>
+          {/* <p className="text-gray-600 max-w-2xl mx-auto">
             Explore breathtaking landscapes, iconic landmarks, and hidden gems around the globe
-          </p>
+          </p> */}
         </div>
       </section>
 

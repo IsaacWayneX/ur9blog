@@ -27,41 +27,66 @@ export default async function BlogPage() {
           <div className="lg:col-span-3">
             <div className="grid md:grid-cols-2 gap-6">
               {posts.map((post) => (
-                <Link key={post.id} href={`/blog/${post.slug}`} className="block group">
-                  <Card className="overflow-hidden cursor-pointer bg-white">
-                    <div className="relative h-48">
-                      <Image src={post.image || "https://plus.unsplash.com/premium_photo-1666863909125-3a01f038e71f?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bW91bnRhaW4lMjBsYW5kc2NhcGV8ZW58MHx8MHx8fDA%3D"} alt={post.title} fill className="object-cover transition-transform duration-200 group-hover:scale-105" />
+                <div key={post.id}>
+                  {/* Mobile: no card wrapper */}
+                  <div className="block md:hidden mb-6">
+                    <div className="relative h-48 w-full flex justify-center items-center">
+                      <Image src={post.image || "https://plus.unsplash.com/premium_photo-1666863909125-3a01f038e71f?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bW91bnRhaW4lMjBsYW5kc2NhcGV8ZW58MHx8MHx8fDA%3D"} alt={post.title} fill className="object-cover object-center rounded-lg" />
                     </div>
-                    <CardContent className="p-6">
-                      <div className="flex items-center gap-2 mb-3">
-                        {post.categories?.slice(0, 2).map((category) => (
-                          <Badge key={category} variant="secondary" className="text-yellow-600">
-                            <Link href={`/blog/category/${encodeURIComponent(category)}`}>{category}</Link>
-                          </Badge>
-                        ))}
+                    <div className="flex items-center gap-2 mt-3 mb-2">
+                      {post.categories?.slice(0, 2).map((category) => (
+                        <Badge key={category} variant="secondary" className="text-yellow-600">
+                          <Link href={`/blog/category/${encodeURIComponent(category)}`}>{category}</Link>
+                        </Badge>
+                      ))}
+                    </div>
+                    <h2 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2">
+                      <Link href={`/blog/${post.slug}`}>{post.title}</Link>
+                    </h2>
+                    <div className="flex items-center gap-4 text-sm text-gray-500 mb-2">
+                      <div className="flex items-center gap-1">
+                        <User className="w-4 h-4" />
+                        <span>{post.author?.displayName || "Admin"}</span>
                       </div>
-                      <h2 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-yellow-600 transition-colors">
-                        {post.title}
-                      </h2>
-                      <div className="flex items-center gap-4 text-sm text-gray-500 mb-4">
-                        <div className="flex items-center gap-1">
-                          <User className="w-4 h-4" />
-                          <span>{post.author?.displayName || "Admin"}</span>
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <Calendar className="w-4 h-4" />
-                          <span>{new Date(post.published).toLocaleDateString()}</span>
-                        </div>
+                      <div className="flex items-center gap-1">
+                        <Calendar className="w-4 h-4" />
+                        <span>{new Date(post.published).toLocaleDateString()}</span>
                       </div>
-                      <div
-                        className="text-gray-600 line-clamp-3"
-                        dangerouslySetInnerHTML={{
-                          __html: post.content?.substring(0, 150) + "..." || "",
-                        }}
-                      />
-                    </CardContent>
-                  </Card>
-                </Link>
+                    </div>
+                    <div className="text-gray-600 line-clamp-3 mb-2" dangerouslySetInnerHTML={{ __html: post.content?.substring(0, 150) + "..." || "" }} />
+                  </div>
+                  {/* Desktop: card wrapper */}
+                  <Link href={`/blog/${post.slug}`} className="hidden md:block group">
+                    <Card className="overflow-hidden cursor-pointer bg-white">
+                      <div className="relative h-48 w-full flex justify-center items-center">
+                        <Image src={post.image || "https://plus.unsplash.com/premium_photo-1666863909125-3a01f038e71f?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bW91bnRhaW4lMjBsYW5kc2NhcGV8ZW58MHx8MHx8fDA%3D"} alt={post.title} fill className="object-cover object-center transition-transform duration-200 group-hover:scale-105" />
+                      </div>
+                      <CardContent className="p-6 min-h-[220px] flex flex-col justify-between">
+                        <div className="flex items-center gap-2 mb-3">
+                          {post.categories?.slice(0, 2).map((category) => (
+                            <Badge key={category} variant="secondary" className="text-yellow-600">
+                              <Link href={`/blog/category/${encodeURIComponent(category)}`}>{category}</Link>
+                            </Badge>
+                          ))}
+                        </div>
+                        <h2 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-yellow-600 transition-colors">
+                          {post.title}
+                        </h2>
+                        <div className="flex items-center gap-4 text-sm text-gray-500 mb-4">
+                          <div className="flex items-center gap-1">
+                            <User className="w-4 h-4" />
+                            <span>{post.author?.displayName || "Admin"}</span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <Calendar className="w-4 h-4" />
+                            <span>{new Date(post.published).toLocaleDateString()}</span>
+                          </div>
+                        </div>
+                        <div className="text-gray-600 line-clamp-3" dangerouslySetInnerHTML={{ __html: post.content?.substring(0, 150) + "..." || "" }} />
+                      </CardContent>
+                    </Card>
+                  </Link>
+                </div>
               ))}
             </div>
           </div>
