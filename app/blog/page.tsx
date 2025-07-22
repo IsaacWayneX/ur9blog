@@ -16,7 +16,7 @@ export default async function BlogPage() {
 
   return (
     <div className="min-h-screen">
-      <div className="container mx-auto px-4 py-12">
+      <div className="container mx-auto px-4 py-8">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">All Blog Posts</h1>
           <p className="text-gray-600 max-w-2xl mx-auto">Discover our latest stories, insights, and adventures</p>
@@ -44,7 +44,7 @@ export default async function BlogPage() {
                       <h2 className={`font-bold text-gray-900 mb-2 line-clamp-2 ${post.title.length > 50 ? "text-sm" : "text-lg"}`}>
                         <Link href={`/blog/${post.slug}`}>{post.title}</Link>
                       </h2>
-                      <div className="flex items-center gap-4 text-sm text-gray-500 mb-2">
+                      <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
                         <div className="flex items-center gap-1">
                           <User className="w-4 h-4" />
                           <span>{post.author?.displayName || "Admin"}</span>

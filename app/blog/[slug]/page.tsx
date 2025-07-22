@@ -72,13 +72,13 @@ export default async function BlogPostPage(props: BlogPostPageProps) {
         </div>
         {/* Hero Content */}
         <div className="relative z-20 p-8 pb-10 w-full max-w-4xl mx-auto">
-          <div className="flex flex-wrap gap-2 mb-4">
+          {/* <div className="flex flex-wrap gap-2 mb-4">
             {post.categories?.map((category) => (
               <Badge key={category} variant="secondary" className="text-white bg-yellow-600/90 hover:bg-yellow-700/90 text-sm px-3 py-1 rounded-full shadow">
                 <Link href={`/blog/category/${encodeURIComponent(category)}`}>{category}</Link>
               </Badge>
             ))}
-          </div>
+          </div> */}
           <h1 className="text-3xl md:text-5xl font-extrabold text-white drop-shadow mb-4 leading-tight">{post.title}</h1>
           <div className="flex items-center gap-4 text-white/90 text-sm">
             <div className="flex items-center gap-2">
@@ -93,17 +93,17 @@ export default async function BlogPostPage(props: BlogPostPageProps) {
           </div>
         </div>
       </div>
-      <div className="container mx-auto px-4 py-12">
+      <div className="w-full px-0 py-6">
         <article>
-          {/* Main Content Card */}
-          <div className="w-full flex justify-center -mt-16 md:-mt-24 pb-16 relative z-30">
-            <div className="w-[90vw] bg-white shadow-lg rounded-lg p-8 md:p-12">
+          {/* Main Content Full Width */}
+          <div className="w-full -mt-16 md:-mt-24 pb-16 relative z-30">
+            <div className="w-full bg-white rounded-none p-0 md:p-0">
               <div
-                className="prose prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-a:text-yellow-600 prose-strong:text-gray-900"
+                className="prose prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-a:text-yellow-600 prose-strong:text-gray-900 px-4 md:px-12 py-8"
                 dangerouslySetInnerHTML={{ __html: post.content || "" }}
               />
               {/* Author Box */}
-              <div className="flex items-center gap-4 mt-12 pt-8 border-t border-gray-100">
+              <div className="flex items-center gap-4 mt-8 pt-6 border-t border-gray-100 px-4 md:px-12">
                 <Image
                   src={post.author?.image?.url || "/placeholder-user.jpg"}
                   alt={post.author?.displayName || "Author"}
