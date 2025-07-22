@@ -15,7 +15,7 @@ export default async function BlogPage() {
   const categories = await getLabels()
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen">
       <div className="container mx-auto px-4 py-12">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">All Blog Posts</h1>
@@ -35,12 +35,12 @@ export default async function BlogPage() {
                     </div>
                     <div className="flex items-center gap-2 mt-3 mb-2">
                       {post.categories?.slice(0, 2).map((category) => (
-                        <Badge key={category} variant="secondary" className="text-yellow-600">
+                        <Badge key={category} variant="secondary" className="text-yellow-600 text-xs">
                           <Link href={`/blog/category/${encodeURIComponent(category)}`}>{category}</Link>
                         </Badge>
                       ))}
                     </div>
-                    <h2 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2">
+                    <h2 className={`font-bold text-gray-900 mb-2 line-clamp-2 ${post.title.length > 50 ? "text-sm" : "text-lg"}`}>
                       <Link href={`/blog/${post.slug}`}>{post.title}</Link>
                     </h2>
                     <div className="flex items-center gap-4 text-sm text-gray-500 mb-2">

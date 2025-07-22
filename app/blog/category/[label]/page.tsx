@@ -36,8 +36,8 @@ export default async function CategoryPage(props: CategoryPageProps) {
   const posts = allPosts.filter((post) => post.categories?.includes(decodedLabel))
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen">
+      <div className="container mx-auto px-4 py-12">
         <div className="max-w-6xl mx-auto">
           {/* Back Button */}
           <Button variant="ghost" asChild className="mb-6">

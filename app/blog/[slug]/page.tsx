@@ -51,9 +51,9 @@ export default async function BlogPostPage(props: BlogPostPageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen">
       {/* Hero Section */}
-      <div className="relative w-full h-80 md:h-[420px] lg:h-[500px] flex items-end">
+      <div className="relative w-full h-80 md:h-[420px] lg:h-[500px] flex items-center justify-center">
         <Image
           src={post.image || "https://images.unsplash.com/photo-1612441804231-77a36b284856?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bW91bnRhaW4lMjBsYW5kc2NhcGV8ZW58MHx8MHx8fDA%3D"}
           alt={post.title}
@@ -93,29 +93,32 @@ export default async function BlogPostPage(props: BlogPostPageProps) {
           </div>
         </div>
       </div>
-
-      {/* Main Content Card */}
-      <div className="w-full flex justify-center mt-4 pb-16 relative z-30">
-        <div className="w-[90vw] max-w-5xl bg-white p-0 md:p-0">
-          <div
-            className="prose prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-a:text-yellow-600 prose-strong:text-gray-900"
-            dangerouslySetInnerHTML={{ __html: post.content || "" }}
-          />
-          {/* Author Box */}
-          <div className="flex items-center gap-4 mt-12 pt-8 border-t border-gray-100">
-            <Image
-              src={post.author?.image?.url || "/placeholder-user.jpg"}
-              alt={post.author?.displayName || "Author"}
-              width={48}
-              height={48}
-              className="rounded-full border border-gray-200 shadow-sm"
-            />
-            <div>
-              <div className="font-semibold text-gray-900">{post.author?.displayName || "Admin"}</div>
-              <div className="text-xs text-gray-500">Published {new Date(post.published).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</div>
+      <div className="container mx-auto px-4 py-12">
+        <article>
+          {/* Main Content Card */}
+          <div className="w-full flex justify-center -mt-16 md:-mt-24 pb-16 relative z-30">
+            <div className="w-[90vw] bg-white shadow-lg rounded-lg p-8 md:p-12">
+              <div
+                className="prose prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-a:text-yellow-600 prose-strong:text-gray-900"
+                dangerouslySetInnerHTML={{ __html: post.content || "" }}
+              />
+              {/* Author Box */}
+              <div className="flex items-center gap-4 mt-12 pt-8 border-t border-gray-100">
+                <Image
+                  src={post.author?.image?.url || "/placeholder-user.jpg"}
+                  alt={post.author?.displayName || "Author"}
+                  width={48}
+                  height={48}
+                  className="rounded-full border border-gray-200 shadow-sm"
+                />
+                <div>
+                  <div className="font-semibold text-gray-900">{post.author?.displayName || "Admin"}</div>
+                  <div className="text-xs text-gray-500">Published {new Date(post.published).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        </article>
       </div>
     </div>
   )

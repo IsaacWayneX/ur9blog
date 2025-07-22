@@ -11,6 +11,9 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "UR9 Blog - Stories & Ideas",
   description: "Explore breathtaking landscapes, iconic landmarks, and hidden gems around the globe",
+  icons: {
+    icon: "/logo.png",
+  },
     generator: 'v0.dev'
 }
 
@@ -23,7 +26,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${inter.className} bg-white`}>
         <Header labels={categories} />
         <main>{children}</main>
         <Footer />

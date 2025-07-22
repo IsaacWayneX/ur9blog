@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
@@ -54,11 +55,9 @@ export function Header({ labels: categories }: HeaderProps) {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link
-            href="/"
-            className="text-2xl font-bold bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 bg-clip-text text-transparent"
-          >
-            UR9 Blog
+          <Link href="/" className="flex items-center gap-2">
+            <Image src="/logo.png" alt="UR9 Blog Logo" width={50} height={50} />
+            <span className="text-xl font-bold text-gray-800">UR9 Blog</span>
           </Link>
 
           {/* Desktop Navigation */}

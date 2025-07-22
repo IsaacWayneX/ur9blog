@@ -89,9 +89,36 @@ const config: Config = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      typography: (theme: any) => ({
+        DEFAULT: {
+          css: {
+            img: {
+              "margin-left": "auto",
+              "margin-right": "auto",
+              "margin-top": "1em",
+              "margin-bottom": "1em",
+            },
+            p: {
+              "line-height": "1.4",
+              "margin-top": "0.8em",
+              "margin-bottom": "0.8em",
+            },
+            "h2, h3, h4, h5, h6": {
+              "font-size": "1.25rem",
+              "font-weight": "600",
+            },
+            a: {
+              color: "#d97706",
+              "&:hover": {
+                color: "#b45309",
+              },
+            },
+          },
+        },
+      }),
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
 } satisfies Config
 
 export default config
