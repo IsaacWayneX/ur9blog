@@ -5,8 +5,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Card, CardContent } from "@/components/ui/card"
-import { Menu, X, Search, ChevronDown } from "lucide-react"
+import { Menu, X, Search } from "lucide-react"
 
 interface HeaderProps {
   labels: string[]
@@ -14,41 +13,6 @@ interface HeaderProps {
 
 export function Header({ labels: categories }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
-
-  // Group categories by type for better organization
-  const categorizedLabels = {
-    "Travel & Places": categories.filter((category) =>
-      ["Travel", "Japan", "Mountains", "Nature", "Photography"].includes(category),
-    ),
-    "Technology & Science": categories.filter((category) => ["Technology", "Science", "Space", "Astronomy"].includes(category)),
-    "Lifestyle & Culture": categories.filter((category) =>
-      ["Lifestyle", "Architecture", "History", "Urban", "Poetry", "City Life"].includes(category),
-    ),
-    Other: categories.filter(
-      (category) =>
-        ![
-          "Travel",
-          "Japan",
-          "Mountains",
-          "Nature",
-          "Photography",
-          "Technology",
-          "Science",
-          "Space",
-          "Astronomy",
-          "Lifestyle",
-          "Architecture",
-          "History",
-          "Urban",
-          "Poetry",
-          "City Life",
-        ].includes(category),
-    ),
-  }
-
-  // Filter out empty categories
-  const filteredCategories = Object.entries(categorizedLabels).filter(([_, categories]) => categories.length > 0)
 
   return (
     <header className="bg-white shadow-sm border-b relative z-50">
@@ -68,50 +32,15 @@ export function Header({ labels: categories }: HeaderProps) {
             <Link href="/blog" className="text-gray-700 hover:text-yellow-600 transition-colors">
               Blog
             </Link>
-
-            {/* Categories with Hover Cards */}
-            <div
-              className="relative group"
-              onMouseEnter={() => setActiveDropdown("categories")}
-              onMouseLeave={() => setActiveDropdown(null)}
-            >
-              <button className="flex items-center gap-1 text-gray-700 hover:text-yellow-600 transition-colors">
-                Categories
-                <ChevronDown className="w-4 h-4" />
-              </button>
-
-              {/* Desktop Hover Card */}
-              <div
-                className={`absolute top-full left-1/2 transform -translate-x-1/2 mt-2 w-[800px] transition-all duration-200 z-[9999] ${
-                  activeDropdown === "categories" ? "opacity-100 visible" : "opacity-0 invisible"
-                }`}
+            {categories.map((category) => (
+              <Link
+                key={category}
+                href={`/blog/category/${encodeURIComponent(category)}`}
+                className="text-gray-700 hover:text-yellow-600 transition-colors"
               >
-                <Card className="shadow-xl border border-yellow-200 bg-white">
-                  <CardContent className="p-8">
-                    <div className="grid grid-cols-3 gap-8">
-                      {filteredCategories.map(([categoryName, categoryList]) => (
-                        <div key={categoryName}>
-                          <h4 className="font-semibold text-black mb-4 text-sm uppercase tracking-wide border-b border-gray-200 pb-2">
-                            {categoryName}
-                          </h4>
-                          <div className="space-y-2">
-                            {categoryList.map((category) => (
-                              <Link
-                                key={category}
-                                href={`/blog/category/${encodeURIComponent(category)}`}
-                                className="block text-sm text-gray-600 hover:text-yellow-600 transition-colors p-2 rounded hover:bg-yellow-50"
-                              >
-                                {category}
-                              </Link>
-                            ))}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            </div>
+                {category}
+              </Link>
+            ))}
           </nav>
 
           {/* Search and Mobile Menu */}
@@ -149,14 +78,16 @@ export function Header({ labels: categories }: HeaderProps) {
                 Blog
               </Link>
 
-              {/* Mobile Categories Dropdown */}
-              {filteredCategories.map(([categoryName, categoryList]) => (
-                <MobileCategoryDropdown
-                  key={categoryName}
-                  categoryName={categoryName}
-                  labels={categoryList}
-                  onLinkClick={() => setIsMenuOpen(false)}
-                />
+              {/* Mobile Categories */}
+              {categories.map((category) => (
+                <Link
+                  key={category}
+                  href={`/blog/category/${encodeURIComponent(category)}`}
+                  className="text-gray-700 hover:text-yellow-600 transition-colors p-2 rounded hover:bg-gray-50"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {category}
+                </Link>
               ))}
 
               {/* Mobile Search */}
@@ -174,41 +105,3 @@ export function Header({ labels: categories }: HeaderProps) {
   )
 }
 
-function MobileCategoryDropdown({
-  categoryName,
-  labels: categories,
-  onLinkClick,
-}: {
-  categoryName: string
-  labels: string[]
-  onLinkClick: () => void
-}) {
-  const [isOpen, setIsOpen] = useState(false)
-
-  return (
-    <div>
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center justify-between w-full text-gray-700 hover:text-yellow-600 transition-colors p-2 rounded hover:bg-gray-50"
-      >
-        <span>{categoryName}</span>
-        <ChevronDown className={`w-4 h-4 transition-transform ${isOpen ? "rotate-180" : ""}`} />
-      </button>
-
-      {isOpen && (
-        <div className="ml-4 mt-2 space-y-1">
-          {categories.map((category) => (
-            <Link
-              key={category}
-              href={`/blog/category/${encodeURIComponent(category)}`}
-              className="block text-sm text-gray-600 hover:text-yellow-600 transition-colors p-2 rounded hover:bg-yellow-50"
-              onClick={onLinkClick}
-            >
-              {category}
-            </Link>
-          ))}
-        </div>
-      )}
-    </div>
-  )
-}
